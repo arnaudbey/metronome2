@@ -55,10 +55,6 @@ $(document).ready(function() {
         });
     });
 
-    $("#wiktionary").on('click', function() {
-        getWiktionaryInfo();
-    });
-
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
 
@@ -75,6 +71,9 @@ $(document).ready(function() {
     bufferLoader.load();
 
     setTempo(tempo);
+
+    $("#wiktionary").on('click', function() {getWiktionaryInfo();});
+    $(document).on("click",".phonetic", function() {copyPhonetic(this);});
 });
 
 function finishedLoading(bufferList) {
@@ -269,7 +268,7 @@ function BufferLoader(context, urlList, callback) {
 function getWiktionaryInfo(){
     var word = $("#normal").val();
     $("#phonetics").html("");
-
+    $("#phonetic").val("");
     $("#phonetics-loading").show();
 
     $.ajax({
@@ -286,7 +285,7 @@ function getWiktionaryInfo(){
                 $("#phonetics").html("rien trouvé");
             } else {
                 for (var i = 0; i < data.length; i++) {
-                    $("#phonetics").append("<span class='btn btn-sm btn-default'>"+data[i]+"</span>");
+                    $("#phonetics").append("<span data-phonetic='"+data[i]+"' class='btn btn-sm btn-default phonetic'>"+data[i]+"</span>");
                 };
             }
         },
@@ -294,6 +293,10 @@ function getWiktionaryInfo(){
             $("#phonetics-loading").hide();
         }
     });
+}
+
+function copyPhonetic(phonetic){
+    $("#phonetic").val(phonetic.innerHTML);
 }
 
 
