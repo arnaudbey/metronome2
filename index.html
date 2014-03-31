@@ -55,18 +55,26 @@
         <!-- TEXT INPUTS -->
         <section>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <table>
                         <tr>
                             <td>Ortographique :</td>
                             <td>
                                 <input type="text" name="pretty" value="" id="normal" placeholder="Abc text" />
                             </td>
+                            <td>
+                                <img class="btn btn-sm" id="wiktionary" src="img/wikipedia.png"/>
+                            </td>
                         </tr>
                         <tr>
                             <td>Phonétique :</td>
                             <td>
                                 <input type="text" name="phonetic" class="phonetic" value="" placeholder="&#7426&#7453 text in doulos" id="phonetic"/>
+                            </td>
+                            <td id="phonetics-container">
+                                <img id="phonetics-loading" style="display:none;" src="img/ajax-loader.gif"/>
+                                <div id="phonetics">
+                                </div>
                             </td>
                         </tr>
 

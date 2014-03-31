@@ -55,6 +55,9 @@ $(document).ready(function() {
         });
     });
 
+    $("#wiktionary").on('click', function() {
+        getWiktionaryInfo();
+    });
 
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
@@ -262,6 +265,37 @@ function BufferLoader(context, urlList, callback) {
     this.bufferList = new Array();
     this.loadCount = 0;
 }
+
+function getWiktionaryInfo(){
+    var word = $("#normal").val();
+    $("#phonetics").html("");
+
+    $("#phonetics-loading").show();
+
+    $.ajax({
+        type: 'POST',
+        // make sure you respect the same origin policy with this url:
+        // http://en.wikipedia.org/wiki/Same_origin_policy
+        url: 'ajax/wiktionary.php',
+        dataType: 'json',
+        data: { 
+            'word': word, 
+        },
+        success: function(data){
+            if(data.length == 0){
+                $("#phonetics").html("rien trouvé");
+            } else {
+                for (var i = 0; i < data.length; i++) {
+                    $("#phonetics").append("<span class='btn btn-sm btn-default'>"+data[i]+"</span>");
+                };
+            }
+        },
+        complete: function(){
+            $("#phonetics-loading").hide();
+        }
+    });
+}
+
 
 BufferLoader.prototype.loadBuffer = function(url, index) {
     // Load buffer asynchronously
