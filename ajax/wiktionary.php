@@ -9,8 +9,8 @@ if ($_POST["word"]) {
     curl_setopt($curl, CURLOPT_USERAGENT, 'testing wikipedia services');
     $result = curl_exec($curl);
 
-    preg_match_all("/{{IPA\|\/(.*?)\/}}$/m", $result, $array);
+    preg_match_all("/{{IPA\|\/(.*?)\/}}$/m", $result, $matches);
 
-    echo json_encode($array[1]);
+    echo json_encode($matches[1]);
 }
 exit();
